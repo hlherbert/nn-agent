@@ -15,6 +15,7 @@ public class BugDraw2D implements Observer {
     public BugDraw2D() {
         JFrame myFrame = new JFrame();
         myFrame.setSize(800, 600);
+        myFrame.setTitle("个体行为模型实例-虫子找食物");
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//表示能够叉掉
 
         // 局中显示

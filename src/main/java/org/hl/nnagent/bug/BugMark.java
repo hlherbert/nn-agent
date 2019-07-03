@@ -6,14 +6,13 @@ package org.hl.nnagent.bug;
 public class BugMark {
     int x;
     int y;
-    int foodId;
-    int bugId;
+    int id;
     BugMarkType type;
 
-    public BugMark(int x, int y, int bugId, BugMarkType type) {
+    public BugMark(int x, int y, int id, BugMarkType type) {
         this.x = x;
         this.y = y;
-        this.bugId = bugId;
+        this.id = id;
         this.type = type;
     }
 }

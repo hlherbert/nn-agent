@@ -22,6 +22,9 @@ public class Bug extends AbstractSimpleAgent {
     private static final int MOVE_ENERGY_COST = 1;
     private static final int PERCEPT_ENERGY_COST = 1;
 
+    // 每次运动后的休息时间
+    private static final int MOVE_REST_TIME_MS = 0;
+
     private static final Logger logger = LoggerFactory.getLogger(Bug.class);
 
     private static AtomicInteger idCount = new AtomicInteger();
@@ -142,7 +145,7 @@ public class Bug extends AbstractSimpleAgent {
                 foodIterator.remove();
                 logger.info("bug {} eat food {}, get energy {}", id, food.getId(), food.getEnergy());
                 // 留下标记
-                map.addMark(new BugMark(posX, posY, id, BugMarkType.FOOD));
+                map.addMark(new BugMark(posX, posY, id, BugMarkType.FOOD_EATEN));
             }
         }
 
@@ -159,6 +162,11 @@ public class Bug extends AbstractSimpleAgent {
         BugIdea bugIdea = (BugIdea) idea;
 
         this.energy -= MOVE_ENERGY_COST; //减少能量
+        try {
+            Thread.sleep(MOVE_REST_TIME_MS);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
         return new BugMovement(bugIdea.direction);
     }
 

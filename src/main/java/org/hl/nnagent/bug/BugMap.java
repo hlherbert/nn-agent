@@ -4,11 +4,12 @@ import org.hl.nnagent.core.Environment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * 虫子地图
  */
-public class BugMap implements Environment {
+public class BugMap extends Observable implements Environment {
     private List<Food> foods = new ArrayList<>();
     private List<Bug> bugs = new ArrayList<>();
     private List<BugMark> marks = new ArrayList<>();
@@ -19,6 +20,7 @@ public class BugMap implements Environment {
     public BugMap(int width, int height) {
         this.width = width;
         this.height = height;
+        setChanged();
     }
 
     public int getWidth() {
@@ -67,10 +69,14 @@ public class BugMap implements Environment {
 
     public void addFood(Food food) {
         this.foods.add(food);
+
+        this.addMark(new BugMark(food.getPosX(), food.getPosY(), food.getId(), BugMarkType.FOOD));
     }
 
     public void addMark(BugMark mark) {
         this.marks.add(mark);
+        this.setChanged();
+        this.notifyObservers(mark);
     }
 
     /**
@@ -82,4 +88,5 @@ public class BugMap implements Environment {
     public boolean inBound(int x, int y) {
         return x>=0 && y>=0 && x<width && y<height;
     }
+
 }
